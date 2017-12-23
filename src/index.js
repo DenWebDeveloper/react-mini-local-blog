@@ -1,6 +1,8 @@
-import React from 'react'
-import {render} from 'react-dom'
-import ArticleList from './ArticleList'
-import {articles} from './fixtures'
+import React from "react";
+import {render} from "react-dom";
+import {articles} from "./fixtures";// cписок статтів
+import ArticleList from "./ArticleList"; //бодує список з кнопками і текстом
 
-render(<ArticleList articles = {articles} />, document.getElementById('container'))
+
+// це замість init вход в додаток
+render(<ArticleList articles={articles}/>, document.querySelector("#container"));
