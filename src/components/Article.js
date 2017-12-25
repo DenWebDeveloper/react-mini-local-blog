@@ -1,22 +1,15 @@
 import React, {Component} from 'react';
 import Comments from './Comments.js';
+import toggleOpen from '../decorators/toggleOpen'
 
-export default class Article extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            isOpen: false
-          }
-        }
-        render() {
+class Article extends Component {
+    render() {
           const {article} = this.props;
-          const {isOpen} = this.state;
           return(
             <div>
               <h3>{article.title}</h3>
-              <button onClick={this.toggleOpen}>
-                {isOpen? "Close" : "Open"}
+              <button onClick={this.props.toggleOpen}>
+                {this.props.isOpen? "Close" : "Open"}
               </button>
               {this.getBody()}
             </div>
@@ -24,7 +17,7 @@ export default class Article extends Component {
         }
 
         getBody() {
-          if(!this.state.isOpen) return null
+          if(!this.props.isOpen) return null
           const {article} = this.props
           return(
               <div>
@@ -33,11 +26,6 @@ export default class Article extends Component {
                </div>
             )
         }
-
-        toggleOpen = (e) => {
-          e.preventDefault()
-          this.setState({
-            isOpen: !this.state.isOpen
-          })
-        }
 }
+
+export default toggleOpen(Article)
