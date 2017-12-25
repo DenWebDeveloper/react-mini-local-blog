@@ -6,7 +6,7 @@ export default class Comments extends Component {
       super(props);
 
       this.state = {
-          isOpen: true
+          isOpen: false
       }
     }
 
@@ -17,7 +17,7 @@ export default class Comments extends Component {
       return(
         <div>
       <button onClick={this.toggleOpen}>
-          {this.state.isOpen? "Open commeents" : "Close commeents"}
+          {this.state.isOpen? "Close commeents":  "Open commeents"}
       </button>
       {this.getBody()}</div>
       )
@@ -25,7 +25,7 @@ export default class Comments extends Component {
 
     getBody() {
         const {comments} = this.props;
-      if(this.state.isOpen) return null
+      if(!this.state.isOpen) return null
       const commentElement = comments.map(comment => <li key={comment.id}>{comment.text}</li>)
       return(
         <ul>
