@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import Article from './Article'
+import Article from './Article/Article'
 
 export default class ArticleList extends Component {
 
@@ -21,7 +21,10 @@ export default class ArticleList extends Component {
   }
 
   toggleOpenArticle(openArticleId) {
-    this.setState({openArticleId})
+    this.setState ({
+      isOpen: !this.props.isOpen,
+      openArticleId: openArticleId
+    })
   }
 
 }
