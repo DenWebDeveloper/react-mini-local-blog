@@ -1,10 +1,8 @@
-var path = require('path')
+var path = require('path');
 
 module.exports = {
     devtool: 'source-map',
-    entry: [
-        './src/index.js'
-    ],
+    entry: path.join(__dirname, 'src'),
     output: {
         path: path.join(__dirname, 'build'),
         filename: 'bundle.js',
@@ -16,7 +14,9 @@ module.exports = {
                 test: /\.js/,
                 loaders: ['babel-loader'],
                 include: path.join(__dirname, 'src')
-            }
+            },
+            {test: /\.(png|jpg|jpeg|gif|ico)$/, use: 'file-loader?name=images/[name].[ext]'},
+            {test: /\.css$/, use: ['style-loader', 'css-loader']}
         ]
     }
-}
+};
