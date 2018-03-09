@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux';
 import moment from 'moment';
+import Transition from 'react-transition-group/Transition';
 
 import Article from './Article/Article';
 import Calendar from './Calendar/Calendar.js';
@@ -7,9 +9,11 @@ import Calendar from './Calendar/Calendar.js';
 class Articles extends Component {
     constructor() {
         super();
+
         this.state = {
             articlesOpenId: undefined,
-            selectedDate: undefined
+            selectedDate: undefined,
+            articlesList: [],
         }
     }
 
@@ -17,26 +21,64 @@ class Articles extends Component {
         this.setState({articlesOpenId: id});
     }
 
-   filterArticles(date) {
+    filterArticles(date) {
         this.setState({selectedDate: date});
     }
-    shouldComponentUpdate(nextProps, nextState) {
+
+/*    shouldComponentUpdate(nextProps, nextState) {
         // Костиль ##{nextState.articlesOpenId !== this.state.articlesOpenId} Прийшлось дописати щоб оновлювався компанент
         return nextState.selectedDate !== this.state.selectedDate || nextState.articlesOpenId !== this.state.articlesOpenId
-    }
+    }*/
 
     renderArticle() {
-        return(
-            this.props.articles.map((item, index) => {
-                console.log(moment(item.date).format('DD.MM.YYYY') === this.state.selectedDate);
-                return  (moment(item.date).format('DD.MM.YYYY') === this.state.selectedDate)?<Article
+        let findArticles = this.props.articles.map((item, index) => {
+            if (moment(item.date).format('DD.MM.YYYY') === this.state.selectedDate) {
+                return <Article
                     item={item}
                     key={index}
                     id={index}
                     articlesOpenId={this.state.articlesOpenId}
-                    onClickArticleOpenId={this.onClickArticleOpenId.bind(this)}/>:null
-            })
-        )
+                    onClickArticleOpenId={this.onClickArticleOpenId.bind(this)}/>
+            }
+        })
+        if (findArticles[0]) {
+            return findArticles
+        } else {
+            return <p>Cтатті не знайденні</p>
+        }
+    }
+
+    articleAnimation() {
+        const defaultStyle = {
+            transition: `opacity 300ms ease-in-out`,
+            opacity: 0,
+        }
+
+        const transitionStyles = {
+            entering: {opacity: 0},
+            entered: {opacity: 1},
+        };
+
+        const Fade = ({in: inProp}) => (
+            <Transition in={inProp} timeout={300}>
+                {(state) => (
+                    <div style={{
+                        ...defaultStyle,
+                        ...transitionStyles[state]
+                    }}>
+                        {this.renderArticle()}
+                    </div>
+                )}
+            </Transition>);
+        return Fade
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({articlesList: nextProps.articles})
+    }
+
+    componentWillMount() {
+        this.state.articlesList = this.props.articles;
     }
 
     render() {
@@ -44,14 +86,17 @@ class Articles extends Component {
             <div>
                 <Calendar filterArticles={this.filterArticles.bind(this)}/>
                 <ul>
-                    {this.props.articles.map((item, index) => {
-                        console.log(moment(item.date).format('DD.MM.YYYY') === this.state.selectedDate);
-                        return  (moment(item.date).format('DD.MM.YYYY') === this.state.selectedDate)?<Article
-                            item={item}
-                            key={index}
-                            id={index}
-                            articlesOpenId={this.state.articlesOpenId}
-                            onClickArticleOpenId={this.onClickArticleOpenId.bind(this)}/>:null
+                    {/*{this.renderArticle()}*/}
+                    {this.state.articlesList.map((item, index) => {
+                        return (
+                            <Article
+                                item={item}
+                                key={index}
+                                id={index}
+                                articlesOpenId={this.state.articlesOpenId}
+                                onClickArticleOpenId={this.onClickArticleOpenId.bind(this)}
+                            />
+                        )
                     })}
                 </ul>
             </div>
@@ -59,4 +104,8 @@ class Articles extends Component {
     }
 }
 
-export default Articles;
+export default connect(
+    state => ({
+        articles: state.fixtures
+    })
+)(Articles);

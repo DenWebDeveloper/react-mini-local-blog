@@ -1,10 +1,27 @@
-.list {
-}
-
 .list-btn-open {
     background-color: #7bdc68;
 }
 
 .list-btn-close {
     background-color: #dc876f;
+}
+
+
+/*animation*/
+.artilce-enter {
+    opacity: 0.01;
+}
+
+.article-enter.article-enter-active {
+    opacity: 1;
+    transition: opacity 1000ms ease-in;
+}
+
+.article-exit {
+    opacity: 1;
+}
+
+.article-exit.article-exit-active {
+    opacity: 0.01;
+    transition: opacity 800ms ease-in;
 }

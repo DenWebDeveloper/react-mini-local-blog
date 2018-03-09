@@ -23,18 +23,19 @@ class Article extends Component {
                     <Moment format="YYYY.MM.DD">{this.props.item.date}</Moment>
                 </p>
                 <button className={(!this.state.openIs) ? 'list-btn-open' : 'list-btn-close'}
-                    onClick={() => {
-                    if (this.props.articlesOpenId !== this.props.id) {
-                        this.props.onClickArticleOpenId(this.props.id);
-                    }
-                    else {
-                        this.setState({
-                            openIs: !this.state.openIs
-                        })
-                    }
-                }}>{this.state.openIs ? 'Close' : 'Open'}</button>
+                        onClick={() => {
+                            if (this.props.articlesOpenId !== this.props.id) {
+                                this.props.onClickArticleOpenId(this.props.id);
+                            }
+                            else {
+                                this.setState({
+                                    openIs: !this.state.openIs
+                                })
+                            }
+                        }}>{this.state.openIs ? 'Close' : 'Open'}</button>
                 <p>{this.state.openIs ? this.props.item.text : null}</p>
-                {(this.props.item.comments && this.state.openIs) ? <Comments comments={this.props.item.comments}/> : ''}
+                {(this.props.item.comments && this.state.openIs) ?
+                    <Comments comments={this.props.item.comments}/> : ''}
             </li>
         )
     }
