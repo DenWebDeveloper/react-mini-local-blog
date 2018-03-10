@@ -4,7 +4,6 @@ import moment from 'moment';
 import Transition from 'react-transition-group/Transition';
 
 import Article from './Article/Article';
-import Calendar from './Calendar/Calendar.js';
 
 class Articles extends Component {
     constructor() {
@@ -84,7 +83,6 @@ class Articles extends Component {
     render() {
         return (
             <div>
-                <Calendar filterArticles={this.filterArticles.bind(this)}/>
                 <ul>
                     {/*{this.renderArticle()}*/}
                     {this.state.articlesList.map((item, index) => {

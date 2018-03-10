@@ -17,8 +17,9 @@ class Article extends Component {
 
     render() {
         return (
-            <li>
+            <li className="card">
                 <h2>{this.props.item.title}</h2>
+                <p>{this.props.item.author}</p>
                 <p>
                     <Moment format="YYYY.MM.DD">{this.props.item.date}</Moment>
                 </p>

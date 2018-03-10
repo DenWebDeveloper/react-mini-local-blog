@@ -1,0 +1,25 @@
+body {
+    background-color: #ccc;
+}
+
+.calendar {
+    margin-top: 20px;
+    background-color: #fff;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.card {
+    padding: 10px;
+    background-color: #fff;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.selected-date {
+    color: red;
+    font-weight: bold;
+}
